@@ -6,7 +6,7 @@
     <title>Mind Reader Game</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
@@ -124,13 +124,12 @@
         <div id="step5" class="hidden">
             <p>Think of a color and a tool.</p>
             <input type="text" id="userInput" placeholder="Enter your thought">
-            <button onclick="revealThought()">Reveal</button>
+            <button id="revealButton" onclick="revealThought()">Reveal</button>
         </div>
         <div class="loading-spinner" id="loadingSpinner"></div>
         <p id="result"></p>
         <button id="restartButton" class="hidden" onclick="restartGame()">Restart</button>
     </div>
-    
     <script>
         function processStep(step) {
             document.getElementById(`step${step - 1}`).classList.add('hidden');
@@ -140,37 +139,37 @@
         }
 
         function revealThought() {
-            const userInput = document.getElementById('userInput').value.trim();
+            const revealButton = document.getElementById('revealButton');
+            const restartButton = document.getElementById('restartButton');
             const result = document.getElementById('result');
             const loadingSpinner = document.getElementById('loadingSpinner');
-            const restartButton = document.getElementById('restartButton');
 
-            if (!userInput) {
-                result.innerText = "Please enter a color and a tool!";
-                return;
-            }
+            // Hide reveal button
+            revealButton.classList.add('hidden');
 
+            // Show loading animation
             loadingSpinner.style.display = 'block';
             result.innerText = '';
 
             setTimeout(() => {
                 loadingSpinner.style.display = 'none';
-                result.innerText = `You thought of: ${userInput}.`;
+                result.innerText = "You're thinking of Red Hammer!";
                 restartButton.classList.remove('hidden');
             }, 2000);
         }
 
         function restartGame() {
+            document.getElementById('result').innerText = '';
+            document.getElementById('userInput').value = '';
+            document.getElementById('restartButton').classList.add('hidden');
+            document.getElementById('revealButton').classList.remove('hidden');
+
+            // Reset steps
             document.getElementById('step1').classList.remove('hidden');
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.add('hidden');
             document.getElementById('step4').classList.add('hidden');
             document.getElementById('step5').classList.add('hidden');
-            document.getElementById('loadingSpinner').style.display = 'none';
-            document.getElementById('result').innerText = '';
-            document.getElementById('restartButton').classList.add('hidden');
-            document.getElementById('userNumber').value = '';
-            document.getElementById('userInput').value = '';
         }
     </script>
 </body>
