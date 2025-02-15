@@ -138,21 +138,21 @@
         }
 
         function revealThought() {
-            const userInput = document.getElementById('userInput').value.trim().toLowerCase();
+            const userInput = document.getElementById('userInput').value.trim();
             const result = document.getElementById('result');
             const loadingSpinner = document.getElementById('loadingSpinner');
-            
+
+            if (!userInput) {
+                result.innerText = "Please enter a color and a tool!";
+                return;
+            }
+
             loadingSpinner.style.display = 'block';
             result.innerText = '';
-            
+
             setTimeout(() => {
                 loadingSpinner.style.display = 'none';
-                
-                if (userInput.includes('hammer') || userInput.includes('red')) {
-                    result.innerText = "I bet you were thinking of a Red Hammer!";
-                } else {
-                    result.innerText = `Interesting! You thought of a ${userInput}.`;
-                }
+                result.innerText = `You thought of: ${userInput}.`;
             }, 2000);
         }
     </script>
