@@ -63,6 +63,12 @@
             display: none;
         }
 
+        .loading {
+            font-size: 1.2em;
+            color: #555;
+            display: none;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -90,8 +96,9 @@
         </div>
         <div id="step5" class="hidden">
             <p>Subtract your original number.</p>
-            <button onclick="revealAnswer()">Reveal Answer</button>
+            <button onclick="showLoading()">Reveal Answer</button>
         </div>
+        <p id="loading" class="loading">Thinking...</p>
         <p id="result" class="hidden"></p>
         <button id="restartButton" class="hidden" onclick="restartGame()">Restart</button>
     </div>
@@ -101,8 +108,14 @@
             document.getElementById(`step${step}`).classList.remove('hidden');
         }
 
-        function revealAnswer() {
+        function showLoading() {
             document.getElementById('step5').classList.add('hidden');
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(revealAnswer, 2000);
+        }
+
+        function revealAnswer() {
+            document.getElementById('loading').style.display = 'none';
             document.getElementById('result').innerText = "Your answer is... 5!";
             document.getElementById('result').classList.remove('hidden');
             document.getElementById('restartButton').classList.remove('hidden');
