@@ -128,7 +128,9 @@
         </div>
         <div class="loading-spinner" id="loadingSpinner"></div>
         <p id="result"></p>
+        <button id="restartButton" class="hidden" onclick="restartGame()">Restart</button>
     </div>
+    
     <script>
         function processStep(step) {
             document.getElementById(`step${step - 1}`).classList.add('hidden');
@@ -141,6 +143,7 @@
             const userInput = document.getElementById('userInput').value.trim();
             const result = document.getElementById('result');
             const loadingSpinner = document.getElementById('loadingSpinner');
+            const restartButton = document.getElementById('restartButton');
 
             if (!userInput) {
                 result.innerText = "Please enter a color and a tool!";
@@ -153,7 +156,21 @@
             setTimeout(() => {
                 loadingSpinner.style.display = 'none';
                 result.innerText = `You thought of: ${userInput}.`;
+                restartButton.classList.remove('hidden');
             }, 2000);
+        }
+
+        function restartGame() {
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('step5').classList.add('hidden');
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('result').innerText = '';
+            document.getElementById('restartButton').classList.add('hidden');
+            document.getElementById('userNumber').value = '';
+            document.getElementById('userInput').value = '';
         }
     </script>
 </body>
