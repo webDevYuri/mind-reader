@@ -67,37 +67,11 @@
             transform: scale(1.05);
         }
 
-        .loading-spinner {
-            display: none;
-            border: 5px solid rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #ff6600;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
         .hidden { display: none; }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5em;
-            }
-
-            p {
-                font-size: 1em;
-            }
         }
     </style>
 </head>
@@ -110,24 +84,22 @@
             <button onclick="processStep(2)">Next</button>
         </div>
         <div id="step2" class="hidden">
-            <p>Multiply it by 2 and add 8.</p>
+            <p>Multiply it by 2.</p>
             <button onclick="processStep(3)">Next</button>
         </div>
         <div id="step3" class="hidden">
-            <p>Divide by 2.</p>
+            <p>Add 10.</p>
             <button onclick="processStep(4)">Next</button>
         </div>
         <div id="step4" class="hidden">
-            <p>Subtract the original number.</p>
+            <p>Divide by 2.</p>
             <button onclick="processStep(5)">Next</button>
         </div>
         <div id="step5" class="hidden">
-            <p id="thinkText">Think of a color and a tool.</p>
-            <input type="text" id="userInput" placeholder="Enter your thought">
-            <button id="revealButton" onclick="revealThought()">Reveal</button>
+            <p>Subtract your original number.</p>
+            <button onclick="revealAnswer()">Reveal Answer</button>
         </div>
-        <div class="loading-spinner" id="loadingSpinner"></div>
-        <p id="result"></p>
+        <p id="result" class="hidden"></p>
         <button id="restartButton" class="hidden" onclick="restartGame()">Restart</button>
     </div>
     <script>
@@ -138,39 +110,16 @@
             }, 500);
         }
 
-        function revealThought() {
-            const revealButton = document.getElementById('revealButton');
-            const restartButton = document.getElementById('restartButton');
-            const result = document.getElementById('result');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const userInput = document.getElementById('userInput');
-            const thinkText = document.getElementById('thinkText');
-
-            // Hide reveal button, input field, and instruction text
-            revealButton.classList.add('hidden');
-            userInput.classList.add('hidden');
-            thinkText.classList.add('hidden');
-
-            // Show loading animation
-            loadingSpinner.style.display = 'block';
-            result.innerText = '';
-
-            setTimeout(() => {
-                loadingSpinner.style.display = 'none';
-                result.innerText = "You're thinking of Red Hammer!";
-                restartButton.classList.remove('hidden');
-            }, 2000);
+        function revealAnswer() {
+            document.getElementById('step5').classList.add('hidden');
+            document.getElementById('result').innerText = "Your answer is... 5!";
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('restartButton').classList.remove('hidden');
         }
 
         function restartGame() {
-            document.getElementById('result').innerText = '';
-            document.getElementById('userInput').value = '';
+            document.getElementById('result').classList.add('hidden');
             document.getElementById('restartButton').classList.add('hidden');
-            document.getElementById('revealButton').classList.remove('hidden');
-            document.getElementById('userInput').classList.remove('hidden');
-            document.getElementById('thinkText').classList.remove('hidden');
-
-            // Reset steps
             document.getElementById('step1').classList.remove('hidden');
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.add('hidden');
