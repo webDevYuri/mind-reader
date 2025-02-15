@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Reader Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: fadeIn 1s ease-in;
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 15px 0;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        button {
+            background: #ff6600;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff4500;
+            transform: scale(1.05);
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #ff6600;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        .hidden { display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mind Reader Game</h1>
+        <div id="step1">
+            <p>Pick a number from 1 to 10.</p>
+            <input type="number" id="userNumber" min="1" max="10" placeholder="Enter your number" required>
+            <button onclick="processStep(2)">Next</button>
+        </div>
+        <div id="step2" class="hidden">
+            <p>Multiply it by 2 and add 8.</p>
+            <button onclick="processStep(3)">Next</button>
+        </div>
+        <div id="step3" class="hidden">
+            <p>Divide by 2.</p>
+            <button onclick="processStep(4)">Next</button>
+        </div>
+        <div id="step4" class="hidden">
+            <p>Subtract the original number.</p>
+            <button onclick="processStep(5)">Next</button>
+        </div>
+        <div id="step5" class="hidden">
+            <p>Think of a color and a tool.</p>
+            <input type="text" id="userInput" placeholder="Enter your thought">
+            <button onclick="revealThought()">Reveal</button>
+        </div>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <p id="result"></p>
+    </div>
+    <script>
+        function processStep(step) {
+            document.getElementById(`step${step - 1}`).classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById(`step${step}`).classList.remove('hidden');
+            }, 500);
+        }
+
+        function revealThought() {
+            const userInput = document.getElementById('userInput').value.trim().toLowerCase();
+            const result = document.getElementById('result');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            loadingSpinner.style.display = 'block';
+            result.innerText = '';
+            
+            setTimeout(() => {
+                loadingSpinner.style.display = 'none';
+                
+                if (userInput.includes('hammer') || userInput.includes('red')) {
+                    result.innerText = "I bet you were thinking of a Red Hammer!";
+                } else {
+                    result.innerText = `Interesting! You thought of a ${userInput}.`;
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
