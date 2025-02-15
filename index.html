@@ -143,9 +143,11 @@
             const restartButton = document.getElementById('restartButton');
             const result = document.getElementById('result');
             const loadingSpinner = document.getElementById('loadingSpinner');
+            const userInput = document.getElementById('userInput');
 
-            // Hide reveal button
+            // Hide reveal button and input field
             revealButton.classList.add('hidden');
+            userInput.classList.add('hidden');
 
             // Show loading animation
             loadingSpinner.style.display = 'block';
@@ -163,6 +165,7 @@
             document.getElementById('userInput').value = '';
             document.getElementById('restartButton').classList.add('hidden');
             document.getElementById('revealButton').classList.remove('hidden');
+            document.getElementById('userInput').classList.remove('hidden');
 
             // Reset steps
             document.getElementById('step1').classList.remove('hidden');
