@@ -122,7 +122,7 @@
             <button onclick="processStep(5)">Next</button>
         </div>
         <div id="step5" class="hidden">
-            <p>Think of a color and a tool.</p>
+            <p id="thinkText">Think of a color and a tool.</p>
             <input type="text" id="userInput" placeholder="Enter your thought">
             <button id="revealButton" onclick="revealThought()">Reveal</button>
         </div>
@@ -144,10 +144,12 @@
             const result = document.getElementById('result');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const userInput = document.getElementById('userInput');
+            const thinkText = document.getElementById('thinkText');
 
-            // Hide reveal button and input field
+            // Hide reveal button, input field, and instruction text
             revealButton.classList.add('hidden');
             userInput.classList.add('hidden');
+            thinkText.classList.add('hidden');
 
             // Show loading animation
             loadingSpinner.style.display = 'block';
@@ -166,6 +168,7 @@
             document.getElementById('restartButton').classList.add('hidden');
             document.getElementById('revealButton').classList.remove('hidden');
             document.getElementById('userInput').classList.remove('hidden');
+            document.getElementById('thinkText').classList.remove('hidden');
 
             // Reset steps
             document.getElementById('step1').classList.remove('hidden');
