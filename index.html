@@ -40,21 +40,13 @@
             color: #555;
         }
 
-        input, button {
+        button {
             padding: 12px;
             margin: 15px 0;
             border: none;
             border-radius: 5px;
             font-size: 1em;
             width: 200px;
-        }
-
-        input {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        button {
             background: #ff6600;
             color: white;
             cursor: pointer;
@@ -67,7 +59,16 @@
             transform: scale(1.05);
         }
 
-        .hidden { display: none; }
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+        }
+
+        .visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -78,9 +79,8 @@
 <body>
     <div class="container">
         <h1>Mind Reader Game</h1>
-        <div id="step1">
+        <div id="step1" class="visible">
             <p>Pick a number from 1 to 10.</p>
-            <input type="number" id="userNumber" min="1" max="10" placeholder="Enter your number" required>
             <button onclick="processStep(2)">Next</button>
         </div>
         <div id="step2" class="hidden">
@@ -104,23 +104,33 @@
     </div>
     <script>
         function processStep(step) {
+            document.getElementById(`step${step - 1}`).classList.remove('visible');
             document.getElementById(`step${step - 1}`).classList.add('hidden');
             setTimeout(() => {
                 document.getElementById(`step${step}`).classList.remove('hidden');
+                document.getElementById(`step${step}`).classList.add('visible');
             }, 500);
         }
 
         function revealAnswer() {
+            document.getElementById('step5').classList.remove('visible');
             document.getElementById('step5').classList.add('hidden');
-            document.getElementById('result').innerText = "Your answer is... 5!";
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('restartButton').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('result').innerText = "Your answer is... 5!";
+                document.getElementById('result').classList.remove('hidden');
+                document.getElementById('result').classList.add('visible');
+                document.getElementById('restartButton').classList.remove('hidden');
+                document.getElementById('restartButton').classList.add('visible');
+            }, 500);
         }
 
         function restartGame() {
+            document.getElementById('result').classList.remove('visible');
             document.getElementById('result').classList.add('hidden');
+            document.getElementById('restartButton').classList.remove('visible');
             document.getElementById('restartButton').classList.add('hidden');
             document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step1').classList.add('visible');
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.add('hidden');
             document.getElementById('step4').classList.add('hidden');
